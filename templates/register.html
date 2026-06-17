@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block auth_content %}
+<div class="login-card glass-panel" style="max-width: 450px;">
+    <div class="login-header">
+        <div class="logo-icon"><i class="ph ph-user-plus"></i></div>
+        <h1>Create Account</h1>
+        <p>Join the coding journey today</p>
+    </div>
+    
+    <form method="POST" action="{{ url_for('auth.register') }}" class="login-form">
+        <div class="input-group">
+            <label for="name">Full Name</label>
+            <div class="input-wrapper">
+                <i class="ph ph-user"></i>
+                <input type="text" id="name" name="name" placeholder="John Doe" required>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+                <i class="ph ph-envelope"></i>
+                <input type="email" id="email" name="email" placeholder="student@example.com" required>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+                <i class="ph ph-lock-key"></i>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label for="confirm_password">Confirm Password</label>
+            <div class="input-wrapper">
+                <i class="ph ph-lock-key-fill"></i>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">Register <i class="ph ph-arrow-right"></i></button>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                Already have an account? <a href="{{ url_for('auth.login') }}" style="color: var(--primary); text-decoration: none;">Sign in here</a>
+            </p>
+        </div>
+    </form>
+</div>
+{% endblock %}

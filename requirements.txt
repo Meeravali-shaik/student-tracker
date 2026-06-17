@@ -1,0 +1,8 @@
+flask
+flask-session
+supabase
+pandas
+plotly
+argon2-cffi
+python-dotenv
+openpyxl

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Coding Tracks</h1>
+    <p>Follow the guided path. You must complete problems sequentially in each track.</p>
+</div>
+
+<div class="tracks-container glass-panel">
+    <div class="tabs-header">
+        {% for track_name, problems in tracks.items() %}
+            <button class="tab-btn {% if loop.first %}active{% endif %}" data-target="track-{{ loop.index }}">
+                {{ track_name }}
+            </button>
+        {% else %}
+            <p>No tracks available yet.</p>
+        {% endfor %}
+    </div>
+
+    <div class="tabs-content">
+        {% for track_name, problems in tracks.items() %}
+            <div class="tab-pane {% if loop.first %}active{% endif %}" id="track-{{ loop.index }}">
+                <div class="problem-list">
+                    {% for problem in problems %}
+                        <div class="problem-card {{ problem.status }}">
+                            <div class="problem-status-icon">
+                                {% if problem.status == 'completed' %}
+                                    <i class="ph ph-check-circle fill-success"></i>
+                                {% elif problem.status == 'unlocked' %}
+                                    <i class="ph ph-lock-open fill-warning"></i>
+                                {% else %}
+                                    <i class="ph ph-lock fill-muted"></i>
+                                {% endif %}
+                            </div>
+                            <div class="problem-details">
+                                <h3>{{ problem.order_no }}. {{ problem.title }}</h3>
+                                {% if problem.difficulty is not none %}
+                                    {% set diff_class = problem.difficulty|replace(' ', '-')|lower %}
+                                    <span class="badge diff-{{ diff_class }}">{{ problem.difficulty }}</span>
+                                {% else %}
+                                    <span class="badge diff-unknown">N/A</span>
+                                {% endif %}
+                            </div>
+                            <div class="problem-action">
+                                {% if problem.status == 'completed' %}
+                                    <button class="btn btn-outline" disabled>Completed</button>
+                                {% elif problem.status == 'unlocked' %}
+                                    <a href="{{ problem.link }}" target="_blank" class="btn btn-primary">Solve Now</a>
+                                    {% if problem.status == 'unlocked' %}
+                                    <form action="{{ url_for('main.solve_problem', problem_id=problem.id) }}" method="post" style="display:inline; margin-left:5px;">
+                                        <button type="submit" class="btn btn-success">Mark Completed</button>
+                                    </form>
+                                    {% endif %}
+                                {% else %}
+                                    <button class="btn btn-disabled" disabled>Locked</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No problems in this track yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

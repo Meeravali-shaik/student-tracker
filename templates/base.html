@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Coding Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Phosphor Icons for modern iconography -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    {% if session.get('user_id') %}
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="ph ph-code"></i> CodingTracker</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('main.dashboard') }}" class="{{ 'active' if request.endpoint == 'main.dashboard' else '' }}">
+                    <i class="ph ph-squares-four"></i> Dashboard
+                </a>
+                <a href="{{ url_for('main.tracks') }}" class="{{ 'active' if request.endpoint == 'main.tracks' else '' }}">
+                    <i class="ph ph-path"></i> Tracks
+                </a>
+                <a href="{{ url_for('main.leaderboard') }}" class="{{ 'active' if request.endpoint == 'main.leaderboard' else '' }}">
+                    <i class="ph ph-trophy"></i> Leaderboard
+                </a>
+                <a href="{{ url_for('main.profile') }}" class="{{ 'active' if request.endpoint == 'main.profile' else '' }}">
+                    <i class="ph ph-user"></i> Profile
+                </a>
+                {% if session.get('role') == 'admin' %}
+                <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.endpoint == 'admin.dashboard' else '' }}">
+                    <i class="ph ph-gear"></i> Admin
+                </a>
+                {% endif %}
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar">{{ session.get('name')[0] }}</div>
+                    <span>{{ session.get('name') }}</span>
+                </div>
+                <a href="{{ url_for('auth.logout') }}" class="logout-btn">
+                    <i class="ph ph-sign-out"></i> Logout
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Flash Messages -->
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <span>{{ message }}</span>
+                                <button class="close-btn" onclick="this.parentElement.remove()"><i class="ph ph-x"></i></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="content-wrapper">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+    {% else %}
+        <!-- For non-authenticated pages like login -->
+        <div class="auth-container">
+            <div class="flash-messages" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 100;">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <span>{{ message }}</span>
+                                <button class="close-btn" onclick="this.parentElement.remove()"><i class="ph ph-x"></i></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            {% block auth_content %}{% endblock %}
+        </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

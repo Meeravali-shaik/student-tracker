@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Leaderboard</h1>
+    <p>Top performers in the Super 50 coding batch.</p>
+</div>
+
+<div class="leaderboard-container glass-panel">
+    <table class="leaderboard-table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Student</th>
+                <th>Roll No</th>
+                <th>Score</th>
+                <th>Streak</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in leaderboard %}
+            <tr class="{% if loop.index <= 3 %}top-rank rank-{{ loop.index }}{% endif %}">
+                <td class="rank-col">
+                    {% if loop.index == 1 %}
+                        <i class="ph ph-medal gold"></i>
+                    {% elif loop.index == 2 %}
+                        <i class="ph ph-medal silver"></i>
+                    {% elif loop.index == 3 %}
+                        <i class="ph ph-medal bronze"></i>
+                    {% else %}
+                        {{ loop.index }}
+                    {% endif %}
+                </td>
+                <td class="name-col">
+                    <div class="avatar-small">{{ student.name[0] }}</div>
+                    {{ student.name }}
+                </td>
+                <td>{{ student.roll_no or 'N/A' }}</td>
+                <td class="score-col">{{ student.score }} pts</td>
+                <td class="streak-col"><i class="ph ph-fire"></i> {{ student.streak }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

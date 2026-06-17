@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back, {{ name }}! Here's your coding progress.</p>
+</div>
+
+<div class="dashboard-grid">
+    <!-- Stat Cards -->
+    <div class="stat-card glass-panel">
+        <div class="stat-icon purple"><i class="ph ph-target"></i></div>
+        <div class="stat-info">
+            <h3>Progress</h3>
+            <div class="stat-value">{{ solved_count }} / {{ total_problems }}</div>
+        </div>
+    </div>
+    
+    <div class="stat-card glass-panel">
+        <div class="stat-icon blue"><i class="ph ph-star"></i></div>
+        <div class="stat-info">
+            <h3>Score</h3>
+            <div class="stat-value">{{ score }}</div>
+        </div>
+    </div>
+    
+    <div class="stat-card glass-panel">
+        <div class="stat-icon orange"><i class="ph ph-fire"></i></div>
+        <div class="stat-info">
+            <h3>Day Streak</h3>
+            <div class="stat-value">{{ streak }}</div>
+        </div>
+    </div>
+
+    <!-- Progress Bar Section -->
+    <div class="progress-section glass-panel">
+        <h2>Overall Completion</h2>
+        <div class="progress-bar-container">
+            <div class="progress-bar" style="width: {{ progress_percentage }}%"></div>
+        </div>
+        <div class="progress-labels">
+            <span>{{ progress_percentage }}% Completed</span>
+            <span>Keep going!</span>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="recent-activity glass-panel">
+        <h2>Recent Activity</h2>
+        {% if recent_activity %}
+            <ul class="activity-list">
+                {% for item in recent_activity %}
+                <li class="activity-item">
+                    <div class="activity-icon"><i class="ph ph-check-circle"></i></div>
+                    <div class="activity-details">
+                        <h4>Solved: {{ item.title }}</h4>
+                        <span class="activity-time">{{ item.completed_at }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-state">
+                <i class="ph ph-code-block"></i>
+                <p>You haven't solved any problems yet. Start your journey!</p>
+                <a href="{{ url_for('main.tracks') }}" class="btn btn-primary">Go to Tracks</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

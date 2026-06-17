@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Admin Panel</h1>
+    <p>Manage users and coding problems.</p>
+</div>
+
+<div class="admin-grid">
+    <div class="glass-panel">
+        <h2>Registered Students</h2>
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Roll No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.email }}</td>
+                        <td>{{ student.roll_no or 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="glass-panel">
+        <h2>Manage Problems</h2>
+        <form method="POST" action="{{ url_for('admin.add_problem') }}" class="add-problem-form">
+            <h3>Add New Problem</h3>
+            <div class="input-group">
+                <label for="title">Problem Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="input-group">
+                <label for="order_no">Order Number</label>
+                <input type="number" id="order_no" name="order_no" required>
+            </div>
+            <div class="input-group">
+                <label for="difficulty">Difficulty</label>
+                <select id="difficulty" name="difficulty">
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="track">Track</label>
+                <select id="track" name="track">
+                    <option value="HackerRank Python">HackerRank Python</option>
+                    <option value="HackerRank Java">HackerRank Java</option>
+                    <option value="LeetCode Python">LeetCode Python</option>
+                    <option value="LeetCode Java">LeetCode Java</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Problem</button>
+        </form>
+
+        <div class="table-responsive mt-4">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Title</th>
+                        <th>Track</th>
+                        <th>Difficulty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for problem in problems %}
+                    <tr>
+                        <td>{{ problem.order_no }}</td>
+                        <td>{{ problem.title }}</td>
+                        <td>{{ problem.track }}</td>
+                        <td><span class="badge diff-{{ problem.difficulty.lower() }}">{{ problem.difficulty }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

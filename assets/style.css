@@ -1,0 +1,52 @@
+/* assets/style.css */
+/* Simple stylesheet to give the app a modern look */
+
+/* Global font */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* Set a pleasant base font and background */
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f0f4ff, #e6e9ff);
+    color: #2b2b2b;
+    line-height: 1.5;
+    padding: 1rem;
+}
+
+/* Header style */
+h1, h2, h3 {
+    font-weight: 600;
+    color: #1a3e8c;
+    margin-bottom: 0.5rem;
+}
+
+/* Card container */
+.stCard {
+    background: rgba(255,255,255,0.85);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Button hover effect */
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    transition: all 0.2s ease;
+}
