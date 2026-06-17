@@ -6,3 +6,4 @@ plotly
 argon2-cffi
 python-dotenv
 openpyxl
+streamlit
